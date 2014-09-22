@@ -26,7 +26,8 @@
                 contentType: "application/text; charset=utf-8",
                 success: function (text) {
 
-                    var db = window.sqlitePlugin.openDatabase({ name: "my.db" });
+                    var db = window.sqlitePlugin.openDatabase({ name: "sarkar.db" });
+
                     db.transaction(function (tx) {
                         tx.executeSql(text, [], function (tx, res) {
 
