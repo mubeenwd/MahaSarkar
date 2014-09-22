@@ -24,14 +24,15 @@
 
                 $("#logger").append("FileNo:" + FileNo + "<br/>");
 
-
                 $.ajax({
                     url: 'sarkar/' + FileNo + '.sql',
                     type: 'get',
                     contentType: "application/text; charset=utf-8",
                     success: function (text) {
                         $("#logger").append("text.length:" + FileNo + " = " + text.length + " <br/>");
+
                         var db = window.sqlitePlugin.openDatabase({ name: "sarkar.db" });
+
                         db.transaction(function (tx) {
                             tx.executeSql(text, [], function (tx, res) {
                                 if (FileNo <= Count) {
