@@ -29,36 +29,41 @@
                     var db = window.sqlitePlugin.openDatabase({ name: "my.db" });
                     db.transaction(function (tx) {
                         tx.executeSql(text, [], function (tx, res) {
-                            
+
                             if (FileNo <= Count) {
-                                
+
                                 $("#meter").val(FileNo);
 
                                 ReadLocaFiles((parseInt(FileNo) + 1));
                             }
                             else {
                                 navigator.notification.alert(
-                                    'Your application is now up to date, start searching',
-                                    function () { },
-                                    'Maha Sarkar',
-                                    'Ok'
-                                );
+                        'Your application is now up to date, start searching',
+                        function () { },
+                        'Maha Sarkar',
+                        'Ok'
+                    );
 
                                 location = 'home.html';
                             }
                         }, function (tx, err) {
-                            
+
                             navigator.notification.alert(
-                                    "tx.executeSql: " + JSON.stringify(err)
-                                    function () { },
-                                    'Maha Sarkar',
-                                    'Ok'
-                                );
+                                "tx.executeSql: " + JSON.stringify(err),
+                                function () { },
+                                'Maha Sarkar',
+                                'Ok'
+                            );
                         });
                     });
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
-                    $("#dvMessages").html("ReadLocaFiles Error " + JSON.stringify(xhr));
+                    navigator.notification.alert(
+                        "ReadLocaFiles Error " + JSON.stringify(xhr),
+                        function () { },
+                        'Maha Sarkar',
+                        'Ok'
+                    );
                     Count = 100;
                 }
             });
@@ -185,10 +190,10 @@
             <br />
         </div>
         <div class="bar bar-footer footer-s">
-            <a class="button button-nav ion-disc" href="about.html">&nbsp; </a>
+            <a class="button button-nav ion-disc" href="#">&nbsp; </a>
             <h1 class="title">
                 CANDIDATE NAME</h1>
-            <a class="button button-nav ion-android-call" href="contact.html">&nbsp; </a>
+            <a class="button button-nav ion-android-call" href="#">&nbsp; </a>
         </div>
     </div>
 </body>
