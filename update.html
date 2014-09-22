@@ -1,0 +1,89 @@
+﻿<html>
+<head>
+    <meta charset="utf-8">
+    <title>Weather</title>
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="css/ionic.css">
+    <link rel="stylesheet" href="spinner/waitMe.min.css">
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="spinner/waitMe.min.js"></script>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript">
+
+        document.addEventListener("deviceready", onDeviceReady, false);
+
+        function onDeviceReady() {
+            ReadLocaFiles(1);
+        }
+
+        function ReadLocaFiles(FileNo) {
+            Count = 50;
+
+            $.ajax({
+                url: 'sarkar/' + FileNo + '.sql',
+                type: 'get',
+                contentType: "application/text; charset=utf-8",
+                success: function (text) {
+                    app.addMessage("sarkar / " + FileNo + ".sql Lenth" + text.length);
+                    var db = window.sqlitePlugin.openDatabase({ name: "my.db" });
+                    db.transaction(function (tx) {
+                        tx.executeSql(text, [], function (tx, res) {
+                            $("#dvMessages").html("sarkar/" + FileNo + ".sql finished");
+
+                            if (FileNo <= Count) {
+                                ReadLocaFiles((parseInt(FileNo) + 1));
+                            }
+                            else {
+                                navigator.notification.alert(
+                                    'Your application is now up to date, start searching',
+                                    function () { },
+                                    'Maha Sarkar',
+                                    'Ok'
+                                );
+
+                                location = 'home.html';
+                            }
+                        }, function (tx, err) {
+                            $("#dvMessages").("tx.executeSql: " + JSON.stringify(err));
+                        });
+                    });
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    $("#dvMessages").("ReadLocaFiles Error " + JSON.stringify(xhr));
+                    Count = 100;
+                }
+            });
+        }
+
+    </script>
+</head>
+<body>
+    <div class="ionic-body">
+        <div class="bar bar-header bar-positive">
+            <a class="button icon ion-chevron-left" onclick="window.history.go(-1); return false;">
+            </a>
+            <h1 class="title">
+                Maha Sarkar - 2014</h1>
+        </div>
+        <div class="content has-header has-footer padding" style="overflow: scroll; height: 100%;"
+            id="container">
+
+            <p>
+                Welcome to maha sarkar application Please wait while application updating</p>
+            <p>Usualy it may tak sevral minutes to update applcation</p>  
+            
+            <div id="dvMessages"></div>  
+            <br />
+            <br />
+            <br />
+        </div>
+        <div class="bar bar-footer bar-positive">
+            <a class="button button-positive ion-disc" href="about.html">&nbsp; </a>
+            <h1 class="title">
+                Sarkar - 2014</h1>
+            <a class="button button-positive ion-android-call" href="contact.html">&nbsp; </a>
+        </div>
+    </div>
+</body>
+</html>
