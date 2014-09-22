@@ -25,7 +25,7 @@
                 type: 'get',
                 contentType: "application/text; charset=utf-8",
                 success: function (text) {
-                    app.addMessage("sarkar / " + FileNo + ".sql Lenth" + text.length);
+
                     var db = window.sqlitePlugin.openDatabase({ name: "my.db" });
                     db.transaction(function (tx) {
                         tx.executeSql(text, [], function (tx, res) {
@@ -64,7 +64,8 @@
                         'Maha Sarkar',
                         'Ok'
                     );
-                    Count = 100;
+
+                    Count = 50;
                 }
             });
         }
@@ -183,7 +184,7 @@
                 depends upon on your device processing speed)</p>
 
             <p style="padding: 10px;">
-                <meter id="meter" value="0" max="556" high="450" low="200"></meter>
+                <meter id="meter" value="0" max="50" high="30" low="10"></meter>
             </p>
             <br />
             <br />
