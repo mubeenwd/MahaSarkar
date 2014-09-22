@@ -18,78 +18,57 @@
         }
 
         function ReadLocaFiles(FileNo) {
-            try {
-                Count = 50;
+            Count = 50;
 
-                $("#logger").append("FileNo:" + FileNo + "<br/>");
+            $.ajax({
+                url: 'sarkar/' + FileNo + '.sql',
+                type: 'get',
+                contentType: "application/text; charset=utf-8",
+                success: function (text) {
 
-                $.ajax({
-                    url: 'sarkar/' + FileNo + '.sql',
-                    type: 'get',
-                    contentType: "application/text; charset=utf-8",
-                    success: function (text) {
+                    var db = window.sqlitePlugin.openDatabase({ name: "sarkar.db" });
 
-                        $("#logger").append("text.length:" + FileNo + " = " + text.length + " <br/>");
+                    db.transaction(function (tx) {
+                        tx.executeSql(text, [], function (tx, res) {
 
-                        var db = window.sqlitePlugin.openDatabase({ name: "sarkar.db" });
+                            if (FileNo <= Count) {
 
-                        db.transaction(function (tx) {
-                            tx.executeSql(text, [], function (tx, res) {
+                                $("#meter").val(FileNo);
 
-                                if (FileNo <= Count) {
-
-                                    $("#meter").val(FileNo);
-
-                                    $("#logger").append("meter.value = " + $("#meter").val() + "<br/>");
-
-                                    ReadLocaFiles((parseInt(FileNo) + 1));
-                                }
-                                else {
-                                    $("#logger").append("Your application is now up to date, start searching<br/>");
-
-                                    navigator.notification.alert(
-                                        'Your application is now up to date, start searching',
-                                        function () { },
-                                        'Maha Sarkar',
-                                        'Ok'
-                                    );
-
-                                    location = 'home.html';
-                                }
-                            }, function (tx, err) {
-
-                                $("#logger").append("Database Error occured for " + FileNo + ", Error: " + JSON.stringify(err) + "<br/>");
-
+                                ReadLocaFiles((parseInt(FileNo) + 1));
+                            }
+                            else {
                                 navigator.notification.alert(
+                        'Your application is now up to date, start searching',
+                        function () { },
+                        'Maha Sarkar',
+                        'Ok'
+                    );
+
+                                location = 'home.html';
+                            }
+                        }, function (tx, err) {
+
+                            navigator.notification.alert(
                                 "tx.executeSql: " + JSON.stringify(err),
                                 function () { },
                                 'Maha Sarkar',
                                 'Ok'
                             );
-                            });
                         });
-                    },
-                    error: function (xhr, ajaxOptions, thrownError) {
-                        $("#logger").append("Ajax Error occured for " + FileNo + ", Error: " + JSON.stringify(xhr) + "<br/>");
-                        navigator.notification.alert(
+                    });
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    navigator.notification.alert(
                         "ReadLocaFiles Error " + JSON.stringify(xhr),
                         function () { },
                         'Maha Sarkar',
                         'Ok'
                     );
 
-                        Count = 50;
-                    }
-                });
-            } catch (e) {
-                $("#logger").append("catch block Error occured for " + FileNo + ", Error: " + JSON.stringify(e) + "<br/>");
-                navigator.notification.alert(
-                        "ReadLocaFiles Error " + JSON.stringify(e),
-                        function () { },
-                        'Maha Sarkar',
-                        'Ok'
-                    );
-            }
+                    Count = 50;
+                }
+            });
         }
 
     </script>
@@ -207,11 +186,6 @@
 
             <p style="padding: 10px;">
                 <meter id="meter" value="0" max="50" high="30" low="10"></meter>
-            </p>
-
-            <p id="logger" style="overflow: scroll;
-            height: 80px;border:solid 1px silver;" >
-            
             </p>
             <br />
             <br />
