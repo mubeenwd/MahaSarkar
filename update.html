@@ -24,26 +24,19 @@
 
                 $("#logger").append("FileNo:" + FileNo + "<br/>");
 
+
                 $.ajax({
                     url: 'sarkar/' + FileNo + '.sql',
                     type: 'get',
                     contentType: "application/text; charset=utf-8",
                     success: function (text) {
-
                         $("#logger").append("text.length:" + FileNo + " = " + text.length + " <br/>");
-
                         var db = window.sqlitePlugin.openDatabase({ name: "sarkar.db" });
-
                         db.transaction(function (tx) {
                             tx.executeSql(text, [], function (tx, res) {
-
                                 if (FileNo <= Count) {
-
                                     $("#meter").val(FileNo);
-
                                     $("#logger").append("meter.value = " + $("#meter").val() + "<br/>");
-
-                                    ReadLocaFiles((parseInt(FileNo) + 1));
                                 }
                                 else {
                                     $("#logger").append("Your application is now up to date, start searching<br/>");
@@ -58,38 +51,30 @@
                                     location = 'home.html';
                                 }
                             }, function (tx, err) {
-
-                                $("#logger").append("Database Error occured for " + FileNo + ", Error: " + JSON.stringify(err) + "<br/>");
-
-                                navigator.notification.alert(
-                                "tx.executeSql: " + JSON.stringify(err),
-                                function () { },
-                                'Maha Sarkar',
-                                'Ok'
-                            );
+                                $("#logger").append("tx.executeSql:" + err.message + "<br/>");
                             });
+                        }, function (tx, err) {
+                            $("#logger").append("db.transaction:" + err.message + "<br/>");
                         });
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
                         $("#logger").append("Ajax Error occured for " + FileNo + ", Error: " + JSON.stringify(xhr) + "<br/>");
                         navigator.notification.alert(
-                        "ReadLocaFiles Error " + JSON.stringify(xhr),
-                        function () { },
-                        'Maha Sarkar',
-                        'Ok'
-                    );
-
-                        Count = 50;
+                            "ReadLocaFiles Error " + JSON.stringify(xhr),
+                            function () { },
+                            'Maha Sarkar',
+                            'Ok'
+                        );
                     }
                 });
             } catch (e) {
                 $("#logger").append("catch block Error occured for " + FileNo + ", Error: " + JSON.stringify(e) + "<br/>");
                 navigator.notification.alert(
-                        "ReadLocaFiles Error " + JSON.stringify(e),
-                        function () { },
-                        'Maha Sarkar',
-                        'Ok'
-                    );
+                    "ReadLocaFiles Error " + JSON.stringify(e),
+                    function () { },
+                    'Maha Sarkar',
+                    'Ok'
+                );
             }
         }
 
