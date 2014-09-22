@@ -29,9 +29,11 @@
                     var db = window.sqlitePlugin.openDatabase({ name: "my.db" });
                     db.transaction(function (tx) {
                         tx.executeSql(text, [], function (tx, res) {
-                            $("#dvMessages").html("sarkar/" + FileNo + ".sql finished");
-
+                            
                             if (FileNo <= Count) {
+                                
+                                $("#meter").val(FileNo);
+
                                 ReadLocaFiles((parseInt(FileNo) + 1));
                             }
                             else {
@@ -45,44 +47,148 @@
                                 location = 'home.html';
                             }
                         }, function (tx, err) {
-                            $("#dvMessages").("tx.executeSql: " + JSON.stringify(err));
+                            
+                            navigator.notification.alert(
+                                    "tx.executeSql: " + JSON.stringify(err)
+                                    function () { },
+                                    'Maha Sarkar',
+                                    'Ok'
+                                );
                         });
                     });
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
-                    $("#dvMessages").("ReadLocaFiles Error " + JSON.stringify(xhr));
+                    $("#dvMessages").html("ReadLocaFiles Error " + JSON.stringify(xhr));
                     Count = 100;
                 }
             });
         }
 
     </script>
+    <style type="text/css">
+        .header-s
+        {
+            background: rgb(147,206,222); /* Old browsers */
+            background: -moz-linear-gradient(top,  rgba(147,206,222,1) 0%, rgba(117,189,209,1) 41%, rgba(73,165,191,1) 100%); /* FF3.6+ */
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(147,206,222,1)), color-stop(41%,rgba(117,189,209,1)), color-stop(100%,rgba(73,165,191,1))); /* Chrome,Safari4+ */
+            background: -webkit-linear-gradient(top,  rgba(147,206,222,1) 0%,rgba(117,189,209,1) 41%,rgba(73,165,191,1) 100%); /* Chrome10+,Safari5.1+ */
+            background: -o-linear-gradient(top,  rgba(147,206,222,1) 0%,rgba(117,189,209,1) 41%,rgba(73,165,191,1) 100%); /* Opera 11.10+ */
+            background: -ms-linear-gradient(top,  rgba(147,206,222,1) 0%,rgba(117,189,209,1) 41%,rgba(73,165,191,1) 100%); /* IE10+ */
+            background: linear-gradient(to bottom,  rgba(147,206,222,1) 0%,rgba(117,189,209,1) 41%,rgba(73,165,191,1) 100%); /* W3C */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#93cede', endColorstr='#49a5bf',GradientType=0 ); /* IE6-9 */
+        }
+        
+        .footer-s
+        {
+            background: rgb(147,206,222); /* Old browsers */
+            background: -moz-linear-gradient(top,  rgba(147,206,222,1) 0%, rgba(117,189,209,1) 41%, rgba(73,165,191,1) 100%); /* FF3.6+ */
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(147,206,222,1)), color-stop(41%,rgba(117,189,209,1)), color-stop(100%,rgba(73,165,191,1))); /* Chrome,Safari4+ */
+            background: -webkit-linear-gradient(top,  rgba(147,206,222,1) 0%,rgba(117,189,209,1) 41%,rgba(73,165,191,1) 100%); /* Chrome10+,Safari5.1+ */
+            background: -o-linear-gradient(top,  rgba(147,206,222,1) 0%,rgba(117,189,209,1) 41%,rgba(73,165,191,1) 100%); /* Opera 11.10+ */
+            background: -ms-linear-gradient(top,  rgba(147,206,222,1) 0%,rgba(117,189,209,1) 41%,rgba(73,165,191,1) 100%); /* IE10+ */
+            background: linear-gradient(to bottom,  rgba(147,206,222,1) 0%,rgba(117,189,209,1) 41%,rgba(73,165,191,1) 100%); /* W3C */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#93cede', endColorstr='#49a5bf',GradientType=0 ); /* IE6-9 */
+        }
+        
+        .button-s
+        {
+            background: rgb(246,248,249); /* Old browsers */
+            background: -moz-linear-gradient(top,  rgba(246,248,249,1) 0%, rgba(229,235,238,1) 50%, rgba(215,222,227,1) 51%, rgba(245,247,249,1) 100%); /* FF3.6+ */
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(246,248,249,1)), color-stop(50%,rgba(229,235,238,1)), color-stop(51%,rgba(215,222,227,1)), color-stop(100%,rgba(245,247,249,1))); /* Chrome,Safari4+ */
+            background: -webkit-linear-gradient(top,  rgba(246,248,249,1) 0%,rgba(229,235,238,1) 50%,rgba(215,222,227,1) 51%,rgba(245,247,249,1) 100%); /* Chrome10+,Safari5.1+ */
+            background: -o-linear-gradient(top,  rgba(246,248,249,1) 0%,rgba(229,235,238,1) 50%,rgba(215,222,227,1) 51%,rgba(245,247,249,1) 100%); /* Opera 11.10+ */
+            background: -ms-linear-gradient(top,  rgba(246,248,249,1) 0%,rgba(229,235,238,1) 50%,rgba(215,222,227,1) 51%,rgba(245,247,249,1) 100%); /* IE10+ */
+            background: linear-gradient(to bottom,  rgba(246,248,249,1) 0%,rgba(229,235,238,1) 50%,rgba(215,222,227,1) 51%,rgba(245,247,249,1) 100%); /* W3C */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f8f9', endColorstr='#f5f7f9',GradientType=0 ); /* IE6-9 */
+            -webkit-border-radius: 25px 25px 25px 25px;
+            border-radius: 25px 25px 25px 25px;
+            -webkit-box-shadow: 2px 2px 2px 2px #A6A7CF;
+            box-shadow: 2px 2px 2px 2px #A6A7CF;
+            text-shadow: 5px 5px 5px #D6D6FF;
+            margin: 10px;
+            color: Black;
+        }
+        
+        .button-nav
+        {
+            background: rgb(246,248,249); /* Old browsers */
+            background: -moz-linear-gradient(top,  rgba(246,248,249,1) 0%, rgba(229,235,238,1) 50%, rgba(215,222,227,1) 51%, rgba(245,247,249,1) 100%); /* FF3.6+ */
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(246,248,249,1)), color-stop(50%,rgba(229,235,238,1)), color-stop(51%,rgba(215,222,227,1)), color-stop(100%,rgba(245,247,249,1))); /* Chrome,Safari4+ */
+            background: -webkit-linear-gradient(top,  rgba(246,248,249,1) 0%,rgba(229,235,238,1) 50%,rgba(215,222,227,1) 51%,rgba(245,247,249,1) 100%); /* Chrome10+,Safari5.1+ */
+            background: -o-linear-gradient(top,  rgba(246,248,249,1) 0%,rgba(229,235,238,1) 50%,rgba(215,222,227,1) 51%,rgba(245,247,249,1) 100%); /* Opera 11.10+ */
+            background: -ms-linear-gradient(top,  rgba(246,248,249,1) 0%,rgba(229,235,238,1) 50%,rgba(215,222,227,1) 51%,rgba(245,247,249,1) 100%); /* IE10+ */
+            background: linear-gradient(to bottom,  rgba(246,248,249,1) 0%,rgba(229,235,238,1) 50%,rgba(215,222,227,1) 51%,rgba(245,247,249,1) 100%); /* W3C */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f8f9', endColorstr='#f5f7f9',GradientType=0 ); /* IE6-9 */
+            -webkit-border-radius: 25px 25px 25px 25px;
+            border-radius: 25px 25px 25px 25px;
+            -webkit-box-shadow: 2px 2px 2px 2px #A6A7CF;
+            box-shadow: 2px 2px 2px 2px #A6A7CF;
+            text-shadow: 5px 5px 5px #D6D6FF;
+            color: Black;
+        }
+        
+        .main-s
+        {
+            background: rgb(254,255,255); /* Old browsers */
+            background: -moz-linear-gradient(top,  rgba(254,255,255,1) 0%, rgba(210,235,249,1) 100%); /* FF3.6+ */
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(254,255,255,1)), color-stop(100%,rgba(210,235,249,1))); /* Chrome,Safari4+ */
+            background: -webkit-linear-gradient(top,  rgba(254,255,255,1) 0%,rgba(210,235,249,1) 100%); /* Chrome10+,Safari5.1+ */
+            background: -o-linear-gradient(top,  rgba(254,255,255,1) 0%,rgba(210,235,249,1) 100%); /* Opera 11.10+ */
+            background: -ms-linear-gradient(top,  rgba(254,255,255,1) 0%,rgba(210,235,249,1) 100%); /* IE10+ */
+            background: linear-gradient(to bottom,  rgba(254,255,255,1) 0%,rgba(210,235,249,1) 100%); /* W3C */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#feffff', endColorstr='#d2ebf9',GradientType=0 ); /* IE6-9 */
+        }
+        
+        .listMenu
+        {
+            background: rgb(147,206,222); /* Old browsers */
+            background: -moz-linear-gradient(top,  rgba(147,206,222,1) 0%, rgba(117,189,209,1) 41%, rgba(73,165,191,1) 100%); /* FF3.6+ */
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(147,206,222,1)), color-stop(41%,rgba(117,189,209,1)), color-stop(100%,rgba(73,165,191,1))); /* Chrome,Safari4+ */
+            background: -webkit-linear-gradient(top,  rgba(147,206,222,1) 0%,rgba(117,189,209,1) 41%,rgba(73,165,191,1) 100%); /* Chrome10+,Safari5.1+ */
+            background: -o-linear-gradient(top,  rgba(147,206,222,1) 0%,rgba(117,189,209,1) 41%,rgba(73,165,191,1) 100%); /* Opera 11.10+ */
+            background: -ms-linear-gradient(top,  rgba(147,206,222,1) 0%,rgba(117,189,209,1) 41%,rgba(73,165,191,1) 100%); /* IE10+ */
+            background: linear-gradient(to bottom,  rgba(147,206,222,1) 0%,rgba(117,189,209,1) 41%,rgba(73,165,191,1) 100%); /* W3C */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#93cede', endColorstr='#49a5bf',GradientType=0 ); /* IE6-9 */
+        }
+        
+        #meter
+        {
+            margin: 5%;
+            width: 90%;
+            height: 50px;
+            display: block;
+        }
+    </style>
 </head>
 <body>
     <div class="ionic-body">
-        <div class="bar bar-header bar-positive">
-            <a class="button icon ion-chevron-left" onclick="window.history.go(-1); return false;">
+        <div class="bar bar-header header-s">
+            <a class="button icon ion-chevron-left button-nav" onclick="window.history.go(-1); return false;">
             </a>
-            <h1 class="title">
+            <h1 class="title" style="color: White;">
                 Maha Sarkar - 2014</h1>
         </div>
-        <div class="content has-header has-footer padding" style="overflow: scroll; height: 100%;"
-            id="container">
-
+        <div class="content has-header has-footer padding main-s" style="overflow: scroll;
+            height: 100%;" id="container">
             <p>
-                Welcome to maha sarkar application Please wait while application updating</p>
-            <p>Usualy it may tak sevral minutes to update applcation</p>  
-            
-            <div id="dvMessages"></div>  
+                Please wait while application updating it self before you start working with it,
+                it should up to date</p>
+            <p>
+                It may take several minutes to accomplish updations, (Usualy 15-20 minutes but still
+                depends upon on your device processing speed)</p>
+
+            <p style="padding: 10px;">
+                <meter id="meter" value="0" max="556" high="450" low="200"></meter>
+            </p>
             <br />
             <br />
             <br />
         </div>
-        <div class="bar bar-footer bar-positive">
-            <a class="button button-positive ion-disc" href="about.html">&nbsp; </a>
+        <div class="bar bar-footer footer-s">
+            <a class="button button-nav ion-disc" href="about.html">&nbsp; </a>
             <h1 class="title">
-                Sarkar - 2014</h1>
-            <a class="button button-positive ion-android-call" href="contact.html">&nbsp; </a>
+                CANDIDATE NAME</h1>
+            <a class="button button-nav ion-android-call" href="contact.html">&nbsp; </a>
         </div>
     </div>
 </body>
