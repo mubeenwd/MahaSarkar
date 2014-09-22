@@ -2955,13 +2955,15 @@
 	Navigation.prototype.to = function(position, speed, standard) {
 		var length;
 
-		if (!standard) {
+		if (!standard && length) {
 			length = this._pages.length;
 			$.proxy(this._overrides.to, this._core)(this._pages[((position % length) + length) % length].start, speed);
 		} else {
 			$.proxy(this._overrides.to, this._core)(position, speed);
 		}
 	}
+
+   
 
 	$.fn.owlCarousel.Constructor.Plugins.Navigation = Navigation;
 
